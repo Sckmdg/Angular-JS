@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru" ng-app="App">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel='stylesheet' href="style.css">
+	<script src='angular.js'></script>
+	<script src='controllers.js'></script>
+	<title>Front-End</title>
+</head>
+<body ng-controller="ListCtrl">
+	<div class="add">
+		<ul>
+			<li><p>username:<p><input type="text"  ng-model="current.username" value="{{current.username}}"></li>
+			<li><p>firstname:<p><input type="text" ng-model="current.firstname" value="{{current.firstname}}"></li>
+			<li><p>lastname:<p><input type="text" ng-model="current.lastname" value="{{current.lastname}}"></li>
+			<li><p>age:<p><input type="text" ng-model="current.age" value="{{current.age}}"></li>
+			<li><p>email:<p><input type="text" ng-model="current.email" value="{{current.email}}"></li>
+		</ul>
+		<input type="button" class="addb" value="добавить" ng-click="addRow(current)">
+		<input type="button" class="save" value="сохранить изменения" ng-click="save(current)">
+	</div>
+	<div class="table">
+		<p class="sign">Количество пользователей: {{users.length}}</p>
+		<ul>
+			<li>username</li>
+			<li>firstname</li>
+			<li>lastname</li>
+			<li>age</li>
+			<li>email</li>
+			<li><button class="eddit">Нельзя редактировать</button></li>
+			<li><button class="delete">Нельзя удалить</button></li>
+		</ul>
+		<ul ng-repeat="user in users">
+			<li>{{user.username}}</li> 
+			<li>{{user.firstname}}</li>
+			<li>{{user.lastname}}</li>
+			<li>{{user.age}}</li>
+			<li>{{user.email}}</li>
+			<li><input type="button" class="eddit" value="редактировать" ng-click="edit(user)"></li>
+			<li><input type="button" class="delete" value="удалить" ng-click="removeRow(user.username)"></li>
+		</ul>
+	</div>
+</body>
+</html>
