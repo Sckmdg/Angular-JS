@@ -22,7 +22,8 @@ blockquote, q { quotes: none; }
 blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; }
 strong { font-weight: bold; } 
 
-input { outline: none; }
+input { outline: none; width: 180px;}
+input[type=button]{width: 104px;}
 html{overflow-x: hidden;}
 table { border-collapse: collapse; border-spacing: 0; }
 img { border: 0; max-width: 100%; }
@@ -48,16 +49,36 @@ a { text-decoration: none; }
 .table ul:last-child li{
 	border-bottom: 1px solid #5D6A90;
 }
+.table .ng-scope:last-child  ul li{border-bottom: 1px solid #5D6A90;}
 .table {text-align: center;}
 .sign{
 	font-size: 15px;
 	padding: 15px;
 }
-.add{font-size: 15px;}
-.add ul{height: 160px;}
-.add ul li{padding: 15px;}
-.add input[type="text"] {
-	width: 300px;
+.add{
+	font-size: 15px;
+	display: inline-block;
+	width: 49%;
+	height: 250px;
 }
+.add ul li{padding: 15px; text-align: left;}
 .add p{float: left; width: 100px;}
-.addb{margin: 15px;}
+.box{
+	display: block;
+	position: fixed;
+	top: 25px;
+	left: 40%;
+    border: 1px solid;
+    width: 314px;
+    z-index: 999;
+    background: #fff;
+}
+.box ul li{
+	border: none !important;
+	height: auto;
+	background: #fff;
+	width: auto;
+	float: none;
+}
+.box ul{display: block;}
+.centr{font-weight: bold !important; font-size: 16px !important; text-align: left !important;}

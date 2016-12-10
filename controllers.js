@@ -11,8 +11,13 @@ App.controller('ListCtrl', function($scope) {
 	{"username":"user7","firstname":"Jessica","lastname":"Lara","age":25,"email":"JessicaRLara@jourrapide.com"}
 	];
 
-	$scope.addRow = function(user){		
-		$scope.users.push(user);
+	$scope.addRow = function(user){	
+		$scope.users.push({ 'username':$scope.username, 'firstname': $scope.firstname, 'lastname':$scope.lastname, 'age': $scope.age, 'email':$scope.email  });
+		$scope.username='';
+		$scope.firstname='';
+		$scope.lastname='';
+		$scope.age='';
+		$scope.email='';
 	};
 
 	$scope.removeRow = function(username){				

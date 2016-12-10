@@ -12,14 +12,14 @@
 <body ng-controller="ListCtrl">
 	<div class="add">
 		<ul>
-			<li><p>username:<p><input type="text"  ng-model="current.username" value="{{current.username}}"></li>
-			<li><p>firstname:<p><input type="text" ng-model="current.firstname" value="{{current.firstname}}"></li>
-			<li><p>lastname:<p><input type="text" ng-model="current.lastname" value="{{current.lastname}}"></li>
-			<li><p>age:<p><input type="text" ng-model="current.age" value="{{current.age}}"></li>
-			<li><p>email:<p><input type="text" ng-model="current.email" value="{{current.email}}"></li>
+			<li class="centr">Добавление пользователей</li>
+			<li><p>username:<p><input type="text"  ng-model="username" value="{{username}}"></li>
+			<li><p>firstname:<p><input type="text" ng-model="firstname" value="{{firstname}}"></li>
+			<li><p>lastname:<p><input type="text" ng-model="lastname" value="{{lastname}}"></li>
+			<li><p>age:<p><input type="number" ng-model="age" value="{{age}}"></li>
+			<li><p>email:<p><input type="email" ng-model="email" value="{{email}}"></li>
+			<li><input type="button" class="addb" value="добавить" ng-click="addRow(user)"></li>
 		</ul>
-		<input type="button" class="addb" value="добавить" ng-click="addRow(current)">
-		<input type="button" class="save" value="сохранить изменения" ng-click="save(current)">
 	</div>
 	<div class="table">
 		<p class="sign">Количество пользователей: {{users.length}}</p>
@@ -29,18 +29,31 @@
 			<li>lastname</li>
 			<li>age</li>
 			<li>email</li>
-			<li><button class="eddit">Нельзя редактировать</button></li>
-			<li><button class="delete">Нельзя удалить</button></li>
+			<li></li>
+			<li></li>
 		</ul>
-		<ul ng-repeat="user in users">
-			<li>{{user.username}}</li> 
-			<li>{{user.firstname}}</li>
-			<li>{{user.lastname}}</li>
-			<li>{{user.age}}</li>
-			<li>{{user.email}}</li>
-			<li><input type="button" class="eddit" value="редактировать" ng-click="edit(user)"></li>
-			<li><input type="button" class="delete" value="удалить" ng-click="removeRow(user.username)"></li>
-		</ul>
-	</div>
+		<div class="repeat" ng-repeat="user in users">
+			<ul>
+				<li>{{user.username}}</li> 
+				<li>{{user.firstname}}</li>
+				<li>{{user.lastname}}</li>
+				<li>{{user.age}}</li>
+				<li>{{user.email}}</li>
+				<li><input type="button" class="eddit" value="редактировать" ng-click="edit(user); eddit = !eddit"></li>
+				<li><input type="button" class="delete" value="удалить" ng-click="removeRow(user.username)"></li>
+			</ul>
+			<div class="add box" ng-show="eddit">
+				<ul>
+					<li class="centr">Редактирование пользователей</li>
+					<li><p>username:<p><input type="text"  ng-model="current.username" value="{{current.username}}"></li>
+					<li><p>firstname:<p><input type="text" ng-model="current.firstname" value="{{current.firstname}}"></li>
+					<li><p>lastname:<p><input type="text" ng-model="current.lastname" value="{{current.lastname}}"></li>
+					<li><p>age:<p><input type="number" ng-model="current.age" value="{{current.age}}"></li>
+					<li><p>email:<p><input type="email" ng-model="current.email" value="{{current.email}}"></li>
+					<li><input type="button" class="save" value="сохранить" ng-click="save(current); eddit = !eddit"></li>
+				</ul>
+			</div>
+		</div>
+	</div>	
 </body>
 </html>
