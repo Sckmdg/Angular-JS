@@ -1,11 +1,13 @@
 body{background: #e5eff8;}
 .cell{
+	font-size: 13px;
 	border: 1px solid #5D6A90;
 	background: #fff;
 	height: 50px;
 	line-height: 50px;
 	border-bottom: 0;
 	text-align: center;
+	position: relative;
 }
 .row:last-child .cell{
 	border-bottom: 1px solid #5D6A90;
@@ -25,6 +27,7 @@ body{background: #e5eff8;}
 }
 .container{
 	background: #fff;
+	margin-top: 13px;
 }
 .back{
 	width: 100%;
@@ -44,9 +47,24 @@ body{background: #e5eff8;}
 	font-weight: bold;
 }
 .ng-valid.ng-dirty {
-    border-color: #78FA89;
+	border-color: #78FA89;
 }
 .ng-invalid.ng-dirty {
-    border-color: #FA787E;
+	border-color: #FA787E;
 }
 .bottom{margin-bottom: 15px;}
+.cell input{
+	width: 100%;
+	height: 30px;
+}
+.myTooltip{
+	position: absolute;
+	top: -45px;
+	width: auto;
+	background: #fff;
+	text-align: left;
+	height: 40px;
+	line-height: 10px;
+	font-size: 10px;
+	color: rgba(255, 0, 0, .5);
+}

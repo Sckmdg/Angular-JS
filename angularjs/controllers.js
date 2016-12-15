@@ -1,7 +1,7 @@
 'use strict';
 var App = angular.module('App', []);
 App.controller('ListCtrl', function($scope) {
-	$scope.users = [ //our database of users
+	$scope.users = [
 	{"username":"user1","firstname":"John","lastname":"Anderson","age":25,"email":"john.anderson@testtask.com"},
 	{"username":"user2","firstname":"Paul","lastname":"Winfred","age":27,"email":"winfredMPaul@dayrep.com"},
 	{"username":"user3","firstname":"Adan","lastname":"Kelley","age":64,"email":"adanMKelley@jourrapide.com"},
@@ -11,7 +11,7 @@ App.controller('ListCtrl', function($scope) {
 	{"username":"user7","firstname":"Jessica","lastname":"Lara","age":25,"email":"JessicaRLara@jourrapide.com"}
 	];
 
-	$scope.addRow = function(user){	//creating new user with empty variable, then with ng-model we can record our values
+	$scope.addRow = function(user){
 		$scope.users.push({ 'username':$scope.username, 'firstname': $scope.firstname, 'lastname':$scope.lastname, 'age': $scope.age, 'email':$scope.email  });
 		$scope.username='';
 		$scope.firstname='';
@@ -35,13 +35,23 @@ App.controller('ListCtrl', function($scope) {
 		$scope.users.splice( index, 1 );		
 	};	
 
+	$scope.current = {};
+	$scope.copy = {};
+
+	$scope.cancel = function(user) {
+		$scope.current = $scope.copy;
+	};
+
 	$scope.edit = function(user){
-		$scope.current = user; //fill variable 'current'
+		$scope.copy = angular.copy(user);
+		$scope.current = user;	
 	};
 
 	$scope.save = function(user){
-		$scope.current = {};//clear variable 'current'
+		$scope.current = {};
+		$scope.copy = {};
 	};
 
-	$scope.current = {};// on some case, if our variable was created and filled before 
+
+
 });

@@ -62,22 +62,44 @@
 			<div class="col-md-3 cell spec">Место для кнопок</div>
 		</div>
 		<div class="row" ng-repeat="user in users">
-			<div class="col-md-1 cell">{{user.username}}</div>
-			<div class="col-md-1 cell">{{user.firstname}}</div>
-			<div class="col-md-1 cell">{{user.lastname}}</div>
-			<div class="col-md-1 cell">{{user.age}}</div>
-			<div class="col-md-2 cell">{{user.email}}</div>
+			<form name="myForm2" value="this">
+				<div class="col-md-1 cell">
+					<span ng-show="!editMode">{{user.username}}</span>
+					<input ng-show="editMode" type="text" name="username" ng-model="current.username" required >
+				</div>
+				<div class="col-md-1 cell">
+					<span ng-show="!editMode">{{user.firstname}}</span>
+					<input ng-show="editMode" type="text" name="firstname" ng-model="current.firstname" required>
+				</div>
+				<div class="col-md-1 cell">
+					<span ng-show="!editMode">{{user.lastname}}</span>
+					<input ng-show="editMode" type="text" name="lastname" ng-model="current.lastname" required>
+				</div>
+				<div class="col-md-1 cell">
+					<span ng-show="!editMode">{{user.age}}</span>
+					<input ng-show="editMode" type="number" name="age" ng-model="current.age" required>
+				</div>
+				<div class="col-md-2 cell">
+					<span ng-show="!editMode">{{user.email}}</span>
+					<input ng-show="editMode" type="email" name="email" ng-model="current.email" required>
+				</div>
+			</form>
 			<div class="col-md-3 cell">
-				<button type="button" class="btn btn-warning">Редактировать</button>
+				<button type="button" class="btn btn-warning" ng-show="!button1" ng-click="edit(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Редактировать</button>
+				<span ng-show="userEddit">
+					<h6>Сохранить изменения?<br>
+						<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="save(); userEddit = !userEddit; button1 = !button1; editMode = !editMode" ng-disabled="myForm2.$invalid">Сохранить</button>
+						<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="cancel(); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Отмена</button>
+					</h6>	
+				</span>
 			</div>
 			<div class="col-md-3 cell">
 				<button type="button" class="btn btn-danger" ng-show="!button" ng-click="userDelete = !userDelete; button = !button">Удалить</button>
 				<span ng-show="userDelete">
 					<h6>Вы точно хотите удалить пользователя?
-					<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="removeRow(user.username)">Удалить</button>
+						<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="removeRow(user.username)">Удалить</button>
 						<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="userDelete = !userDelete; button = !button">Отмена</button>
-					</h6>
-					
+					</h6>	
 				</span>
 			</div>
 		</div>
