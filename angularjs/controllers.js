@@ -11,6 +11,10 @@ App.controller('ListCtrl', function($scope) {
 	{"username":"user7","firstname":"Jessica","lastname":"Lara","age":25,"email":"JessicaRLara@jourrapide.com"}
 	];
 
+	for (var i = 0; i < $scope.users.length; i++) {
+		$scope.users[i].id = i;
+	}
+
 	$scope.addRow = function(user){
 		$scope.users.push({ 'username':$scope.username, 'firstname': $scope.firstname, 'lastname':$scope.lastname, 'age': $scope.age, 'email':$scope.email  });
 		$scope.username='';
@@ -38,20 +42,36 @@ App.controller('ListCtrl', function($scope) {
 	$scope.current = {};
 	$scope.copy = {};
 
-	$scope.cancel = function(user) {
-		$scope.current = $scope.copy;
-	};
-
 	$scope.edit = function(user){
 		$scope.copy = angular.copy(user);
-		$scope.current = user;	
+		$scope.current = angular.copy(user);	
 	};
 
 	$scope.save = function(user){
+		for (var i = 0; i < $scope.users.length; i++) {
+			if ($scope.users[i].id === $scope.current.id){
+				$scope.users[i]=$scope.current;
+			}
+		}
 		$scope.current = {};
 		$scope.copy = {};
+		$scope.isDisabled = false;
 	};
 
+	$scope.cancel = function(user) {
+		for (var i = 0; i < $scope.users.length; i++) {
+			if ($scope.users[i].id === $scope.copy.id){
+				$scope.users[i]=$scope.copy;
+			}
+		}
+		$scope.current = {};
+		$scope.copy = {};
+		$scope.isDisabled = false;
+	};
 
+	$scope.isDisabled = false;
 
+    $scope.disableButton = function() {
+        $scope.isDisabled = true;
+    }
 });

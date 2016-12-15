@@ -38,7 +38,7 @@
 				<span ng-show="myForm.email.$error.email" class="message-error">Неверный адрес</span>
 				<div class="hiding" ng-show="myForm.email.$dirty && myForm.email.$invalid"><span ng-show="myForm.email.$error.required" class="message-error">Поле должно быть заполнено</span></div>
 			</div>
-			<input type="submit" class="btn btn-success" placeholder="Добавить" ng-click="addRow(user);userAdd = !userAdd" ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.firstname.$dirty && myForm.firstname.$invalid || myForm.lastname.$dirty && myForm.lastname.$invalid || myForm.age.$dirty && myForm.age.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.$invalid"></input>
+			<button type="submit" class="btn btn-success" placeholder="Добавить" ng-click="addRow(user);userAdd = !userAdd" ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.firstname.$dirty && myForm.firstname.$invalid || myForm.lastname.$dirty && myForm.lastname.$invalid || myForm.age.$dirty && myForm.age.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.$invalid">Добавить</button>
 			<button type="button" class="btn btn-danger col-md-offset-1" ng-click="userAdd = !userAdd">Отмена</button>
 			<span ng-show="myForm.$invalid" class="message-error"><br>Проверьте что все поля заполнены и данные корректны</span>
 		</form>	
@@ -51,6 +51,7 @@
 			<button class="btn btn-default" type="submit" ng-click="userAdd = !userAdd">
 				Добавить пользователя
 			</button>
+			<div class="hiding" ng-show="myForm2.username.$dirty && myForm2.username.$invalid"><span ng-show="myForm2.username.$error.required" class="message-error">Поле должно быть заполнено</span></div>
 		</h2>		
 		<div class="row up">
 			<div class="col-md-1 cell spec">username</div>
@@ -62,7 +63,7 @@
 			<div class="col-md-3 cell spec">Место для кнопок</div>
 		</div>
 		<div class="row" ng-repeat="user in users">
-			<form name="myForm2" value="this">
+			<form name="myForm2">
 				<div class="col-md-1 cell">
 					<span ng-show="!editMode">{{user.username}}</span>
 					<input ng-show="editMode" type="text" name="username" ng-model="current.username" required >
@@ -85,11 +86,11 @@
 				</div>
 			</form>
 			<div class="col-md-3 cell">
-				<button type="button" class="btn btn-warning" ng-show="!button1" ng-click="edit(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Редактировать</button>
+				<button type="button" class="btn btn-warning" ng-show="!button1" ng-disabled="isDisabled" ng-click="edit(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode; disableButton()">Редактировать</button>
 				<span ng-show="userEddit">
 					<h6>Сохранить изменения?<br>
-						<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="save(); userEddit = !userEddit; button1 = !button1; editMode = !editMode" ng-disabled="myForm2.$invalid">Сохранить</button>
-						<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="cancel(); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Отмена</button>
+						<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="save(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode" ng-disabled="myForm2.$invalid">Сохранить</button>
+						<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="cancel(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Отмена</button>
 					</h6>	
 				</span>
 			</div>
