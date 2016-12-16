@@ -5,45 +5,61 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>AngularJS</title>
+	<link rel="icon" type="image/x-icon" href="http://www.sibers.ru/wp-content/themes/sibers-ru/favicon.ico" >
 	<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
 </head>
 <body ng-controller="ListCtrl">
+	<!-- Форма добавления пользователей -->
 	<div class="back" ng-show="userAdd">
 		<form class="col-md-4 col-md-offset-4 myForm" name="myForm">
 			<h3>Добавление пользователей</h3>
 			<div class="form-group">
 				<label for="InputUsername">Username</label>
 				<input type="text" class="form-control" ng-model="username" placeholder="Username" name="username" required>
-				<div class="hiding" ng-show="myForm.username.$dirty && myForm.username.$invalid"><span ng-show="myForm.username.$error.required" class="message-error">Поле должно быть заполнено</span></div>
+				<div class="hiding" ng-show="myForm.username.$dirty && myForm.username.$invalid">
+					<span ng-show="myForm.username.$error.required" class="message-error">Поле должно быть заполнено</span>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="InputFirstname">Firstname</label>
 				<input type="text" class="form-control" ng-model="firstname" placeholder="Firstname" name="firstname" required>
-				<div class="hiding" ng-show="myForm.firstname.$dirty && myForm.firstname.$invalid"><span ng-show="myForm.firstname.$error.required" class="message-error">Поле должно быть заполнено</span></div>
+				<div class="hiding" ng-show="myForm.firstname.$dirty && myForm.firstname.$invalid">
+					<span ng-show="myForm.firstname.$error.required" class="message-error">Поле должно быть заполнено</span>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="InputLastname">Lastname</label>
 				<input type="text" class="form-control" ng-model="lastname" placeholder="Lastname" name="lastname" required>
-				<div class="hiding" ng-show="myForm.lastname.$dirty && myForm.lastname.$invalid"><span ng-show="myForm.lastname.$error.required" class="message-error">Поле должно быть заполнено</span></div>
+				<div class="hiding" ng-show="myForm.lastname.$dirty && myForm.lastname.$invalid">
+					<span ng-show="myForm.lastname.$error.required" class="message-error">Поле должно быть заполнено</span>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="InputAge">Age</label>
 				<input type="number" class="form-control" ng-model="age" placeholder="Age" name="age" required>
-				<div class="hiding" ng-show="myForm.age.$dirty && myForm.age.$invalid"><span ng-show="myForm.age.$invalid.age" class="message-error">Укажите только цифры</span></div>
+				<div class="hiding" ng-show="myForm.age.$dirty && myForm.age.$invalid">
+					<span ng-show="myForm.age.$invalid.age" class="message-error">Укажите только цифры</span>
+				</div>
 			</div>
 			<div class="form-group">
 				<label for="InputEmail">Email</label>
 				<input type="email" class="form-control" ng-model="email" placeholder="Email" name="email" required>
 				<span ng-show="myForm.email.$error.email" class="message-error">Неверный адрес</span>
-				<div class="hiding" ng-show="myForm.email.$dirty && myForm.email.$invalid"><span ng-show="myForm.email.$error.required" class="message-error">Поле должно быть заполнено</span></div>
+				<div class="hiding" ng-show="myForm.email.$dirty && myForm.email.$invalid">
+					<span ng-show="myForm.email.$error.required" class="message-error">Поле должно быть заполнено</span>
+				</div>
 			</div>
 			<button type="submit" class="btn btn-success" placeholder="Добавить" ng-click="addRow(user);userAdd = !userAdd" ng-disabled="myForm.username.$dirty && myForm.username.$invalid || myForm.firstname.$dirty && myForm.firstname.$invalid || myForm.lastname.$dirty && myForm.lastname.$invalid || myForm.age.$dirty && myForm.age.$invalid || myForm.email.$dirty && myForm.email.$invalid || myForm.$invalid">Добавить</button>
 			<button type="button" class="btn btn-danger col-md-offset-1" ng-click="userAdd = !userAdd">Отмена</button>
 			<span ng-show="myForm.$invalid" class="message-error"><br>Проверьте что все поля заполнены и данные корректны</span>
 		</form>	
 	</div>
+	<!-- Загрузочный экран -->
 	<div class="container">
+		<div class="load col-md-10 text-center">
+			<h1>Загрузка...</h1>
+		</div>
 		<h2>Задание для 
 			<a href="http://www.sibers.ru/"><img src="img/logo.png" alt="Sibers"></a>
 			<p class="sign">Количество пользователей: {{users.length}}</p>
@@ -51,7 +67,6 @@
 			<button class="btn btn-default" type="submit" ng-click="userAdd = !userAdd">
 				Добавить пользователя
 			</button>
-			<div class="hiding" ng-show="myForm2.username.$dirty && myForm2.username.$invalid"><span ng-show="myForm2.username.$error.required" class="message-error">Поле должно быть заполнено</span></div>
 		</h2>		
 		<div class="row up">
 			<div class="col-md-1 cell spec">username</div>
@@ -62,54 +77,82 @@
 			<div class="col-md-3 cell">Место для кнопок</div>
 			<div class="col-md-3 cell spec">Место для кнопок</div>
 		</div>
-		<div class="row" ng-repeat="user in users">
-			<form name="myForm2">
-				<div class="col-md-1 cell">
-					<span ng-show="!editMode">{{user.username}}</span>
-					<input ng-show="editMode" type="text" name="username" ng-model="current.username" required >
+		<!-- Начало показа всех имеющийхся пользователей. Каждая строка состоит из: 
+			 span - в которой хранится значение из БД (username, firtsname и тд)
+			 input который в котором редактируем инфу
+			 Сообщение об ошибке заполнения
+			 Кнопку редактировать -> внутри подверждение | При нажатии данной кнопки span становятся невидимыми, а input - становится видимым
+			 Кнопку удалить -> внутри подверждение
+			-->
+			<div class="row" ng-repeat="user in users">
+				<form name="myForm2">
+					<div class="col-md-1 cell">
+						<span ng-show="!editMode">{{user.username}}</span>
+						<input ng-show="editMode" type="text" name="username" ng-model="current.username" required >
+						<div class="hiding myTooltip" ng-show="myForm2.username.$dirty && myForm2.username.$invalid">
+							<span ng-show="myForm2.username.$error.required" class="message-error">Поле должно быть заполнено</span>
+						</div>
+					</div>
+					<div class="col-md-1 cell">
+						<span ng-show="!editMode">{{user.firstname}}</span>
+						<input ng-show="editMode" type="text" name="firstname" ng-model="current.firstname" required>
+						<div class="hiding myTooltip" ng-show="myForm2.firstname.$dirty && myForm2.firstname.$invalid">
+							<span ng-show="myForm2.firstname.$error.required" class="message-error">Поле должно быть заполнено</span>
+						</div>
+					</div>
+					<div class="col-md-1 cell">
+						<span ng-show="!editMode">{{user.lastname}}</span>
+						<input ng-show="editMode" type="text" name="lastname" ng-model="current.lastname" required>
+						<div class="hiding myTooltip" ng-show="myForm2.lastname.$dirty && myForm2.lastname.$invalid">
+							<span ng-show="myForm2.lastname.$error.required" class="message-error">Поле должно быть заполнено</span>
+						</div>
+					</div>
+					<div class="col-md-1 cell">
+						<span ng-show="!editMode">{{user.age}}</span>
+						<input ng-show="editMode" type="number" name="age" ng-model="current.age" required>
+						<div class="hiding myTooltip" ng-show="myForm2.age.$dirty && myForm2.age.$invalid">
+							<span ng-show="myForm2.age.$error.required" class="message-error">Поле должно быть заполнено</span>
+						</div>
+					</div>
+					<div class="col-md-2 cell">
+						<span ng-show="!editMode">{{user.email}}</span>
+						<input ng-show="editMode" type="email" name="email" ng-model="current.email" required>
+						<div class="hiding myTooltip" ng-show="myForm2.email.$dirty && myForm2.email.$invalid">
+							<span ng-show="myForm2.email.$error.required" class="message-error">Поле должно быть заполнено</span>
+							<span ng-show="myForm2.email.$error.email" class="message-error">Неверный адрес</span>
+						</div>
+					</div>
+				</form>
+				<div class="col-md-3 cell">
+					<button type="button" class="btn btn-warning" ng-show="!button1" ng-disabled="isDisabled" ng-click="edit(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode; disableButton()">Редактировать</button>
+					<span ng-show="userEddit">
+						<h6>Сохранить изменения?<br>
+							<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="save(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode" ng-disabled="myForm2.$invalid">Сохранить</button>
+							<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="cancel(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Отмена</button>
+						</h6>	
+					</span>
 				</div>
-				<div class="col-md-1 cell">
-					<span ng-show="!editMode">{{user.firstname}}</span>
-					<input ng-show="editMode" type="text" name="firstname" ng-model="current.firstname" required>
+				<div class="col-md-3 cell">
+					<button type="button" class="btn btn-danger" ng-show="!button" ng-click="userDelete = !userDelete; button = !button">Удалить</button>
+					<span ng-show="userDelete">
+						<h6>Вы точно хотите удалить пользователя?
+							<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="removeRow(user.username)">Удалить</button>
+							<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="userDelete = !userDelete; button = !button">Отмена</button>
+						</h6>	
+					</span>
 				</div>
-				<div class="col-md-1 cell">
-					<span ng-show="!editMode">{{user.lastname}}</span>
-					<input ng-show="editMode" type="text" name="lastname" ng-model="current.lastname" required>
-				</div>
-				<div class="col-md-1 cell">
-					<span ng-show="!editMode">{{user.age}}</span>
-					<input ng-show="editMode" type="number" name="age" ng-model="current.age" required>
-				</div>
-				<div class="col-md-2 cell">
-					<span ng-show="!editMode">{{user.email}}</span>
-					<input ng-show="editMode" type="email" name="email" ng-model="current.email" required>
-				</div>
-			</form>
-			<div class="col-md-3 cell">
-				<button type="button" class="btn btn-warning" ng-show="!button1" ng-disabled="isDisabled" ng-click="edit(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode; disableButton()">Редактировать</button>
-				<span ng-show="userEddit">
-					<h6>Сохранить изменения?<br>
-						<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="save(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode" ng-disabled="myForm2.$invalid">Сохранить</button>
-						<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="cancel(user); userEddit = !userEddit; button1 = !button1; editMode = !editMode">Отмена</button>
-					</h6>	
-				</span>
-			</div>
-			<div class="col-md-3 cell">
-				<button type="button" class="btn btn-danger" ng-show="!button" ng-click="userDelete = !userDelete; button = !button">Удалить</button>
-				<span ng-show="userDelete">
-					<h6>Вы точно хотите удалить пользователя?
-						<button type="submit" class="btn btn-success btn-xs col-md-offset-1" ng-click="removeRow(user.username)">Удалить</button>
-						<button type="button" class="btn btn-danger btn-xs col-md-offset-1" ng-click="userDelete = !userDelete; button = !button">Отмена</button>
-					</h6>	
-				</span>
 			</div>
 		</div>
-	</div>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="bootstrap/js/bootstrap.min.js"></script>
-	<script src='angularjs/angular.js'></script>
-	<script src='angularjs/controllers.js'></script>
-</body>
-</html>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="bootstrap/js/bootstrap.min.js"></script>
+		<script src='angularjs/angular.js'></script>
+		<script src='angularjs/controllers.js'></script>
+		<script>
+			$(window).ready(function(){
+				$('.load').fadeOut(600);;
+			})
+		</script>
+	</body>
+	</html>

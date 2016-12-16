@@ -68,3 +68,9 @@ body{background: #e5eff8;}
 	font-size: 10px;
 	color: rgba(255, 0, 0, .5);
 }
+.load{
+	position: fixed;
+	height: 100%;
+	background: #fff;
+	z-index: 1000;
+}
